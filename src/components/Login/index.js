@@ -33,11 +33,13 @@ const Login = ({ authenticated, setAuthenticated }) => {
     api
       .post("/sessions", data)
       .then((response) => {
-        const { token } = response.data;
+        const { token, user } = response.data;
 
         console.log(token);
+        console.log(user);
 
         localStorage.setItem("@kenzieHub:token", JSON.stringify(token));
+        localStorage.setItem("@kenzieHub:user", JSON.stringify(user));
 
         setAuthenticated(true);
 
