@@ -10,8 +10,6 @@ const Routes = () => {
 
   const [user, setUser] = useState([]);
 
-  console.log(user);
-
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
 

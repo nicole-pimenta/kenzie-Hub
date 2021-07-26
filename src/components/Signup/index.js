@@ -2,7 +2,7 @@ import { Background, Container, Content, AnimationContainer } from "./styles";
 import Button from "../Button/index";
 import { Link, Redirect, useHistory } from "react-router-dom";
 import Input from "../../components/Input";
-import { FiUser, FiMail, FiLock } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiBook } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,9 +16,9 @@ const Signup = ({ authenticated }) => {
       .required("campo obrigatório")
       .matches(/[a-zA-Z\u00C0-\u00FF ]+/i, "deve conter apenas letras"),
     email: yup.string().email("email inválido").required("campo obrigatório"),
-    bio: yup.string(),
-    contact: yup.string(),
-    course_module: yup.string(),
+    bio: yup.string().required("campo obrigatório"),
+    contact: yup.string().required("campo obrigatório"),
+    course_module: yup.string().required("campo obrigatório"),
     password: yup
       .string()
       .matches(
@@ -91,8 +91,9 @@ const Signup = ({ authenticated }) => {
             <Input
               register={register}
               name="bio"
+              icon={FiUser}
               label="Bio"
-              placeholder=" Bio"
+              placeholder=" Fale um pouco sobre você"
               error={errors.bio?.message}
             />
             <Input
@@ -100,13 +101,13 @@ const Signup = ({ authenticated }) => {
               name="contact"
               icon={FiMail}
               label="Contato"
-              placeholder="contato"
+              placeholder="Contato"
               error={errors.contact?.message}
             />
             <Input
               register={register}
               name="course_module"
-              icon={FiMail}
+              icon={FiBook}
               label="Módulo do curso"
               placeholder="módulo_curso"
               error={errors.course_module?.message}
