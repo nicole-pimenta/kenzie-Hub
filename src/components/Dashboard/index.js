@@ -11,19 +11,18 @@ import api from "../../services/api";
 import Card from "../Card";
 
 const Dashboard = ({ authenticated, user }) => {
-  console.log(user);
   const [token] = useState(
     JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
   );
 
   const [tech, setTech] = useState([]);
 
-  function loadTasks() {
+  function loadTechs() {
     user.map((ele) => setTech(ele.user.techs));
   }
 
   useEffect(() => {
-    loadTasks();
+    loadTechs();
   }, []);
 
   const schema = yup.object().shape({
@@ -53,8 +52,15 @@ const Dashboard = ({ authenticated, user }) => {
           },
         }
       )
-      .then((_) => loadTasks())
+      .then((_) => loadTechs())
       .catch((err) => console.err);
+  };
+
+  const handleRemoveTech = (removedItem) => {
+    let filteredList = tech.filter((ele) => {
+      return ele !== removedItem;
+    });
+    setTech([...filteredList]);
   };
 
   if (!authenticated) {
@@ -84,7 +90,11 @@ const Dashboard = ({ authenticated, user }) => {
       </InputContainer>
       <TasksContainer>
         {tech.map((ele) => (
-          <Card title={ele.title} status={ele.status} onClick={() => {}}></Card>
+          <Card
+            title={ele.title}
+            status={ele.status}
+            onClick={() => handleRemoveTech(ele)}
+          ></Card>
         ))}
       </TasksContainer>
     </Container>
