@@ -10,10 +10,21 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import Card from "../Card";
 
-const Dashboard = ({ authenticated }) => {
-  const user = localStorage[`@kenzieHub:user`];
+const Dashboard = ({ authenticated, user }) => {
   console.log(user);
+  const [token] = useState(
+    JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
+  );
+
   const [tech, setTech] = useState([]);
+
+  function loadTasks() {
+    user.map((ele) => setTech(ele.user.techs));
+  }
+
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
   const schema = yup.object().shape({
     title: yup.string().required("Campo obrigatorio"),
@@ -29,13 +40,20 @@ const Dashboard = ({ authenticated }) => {
   });
 
   const onSubmitFunction = ({ title, status }) => {
-    const tasks = { title, status };
-
-    console.log(tasks);
-
     api
-      .post(`/${user}/techs`, tasks)
-      .then((response) => console.log(response.data))
+      .post(
+        "/users/techs",
+        {
+          title: title,
+          status: status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((_) => loadTasks())
       .catch((err) => console.err);
   };
 
@@ -65,8 +83,8 @@ const Dashboard = ({ authenticated }) => {
         </section>
       </InputContainer>
       <TasksContainer>
-        {[1, 2, 3].map((_) => (
-          <Card title="OLa" status="2" onClick={() => {}} />
+        {tech.map((ele) => (
+          <Card title={ele.title} status={ele.status} onClick={() => {}}></Card>
         ))}
       </TasksContainer>
     </Container>

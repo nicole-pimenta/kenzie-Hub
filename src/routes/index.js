@@ -8,6 +8,10 @@ import Dashboard from "../components/Dashboard";
 const Routes = () => {
   const [authenticated, setAuthenticated] = useState(false);
 
+  const [user, setUser] = useState([]);
+
+  console.log(user);
+
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
 
@@ -28,10 +32,12 @@ const Routes = () => {
         <Login
           authenticated={authenticated}
           setAuthenticated={setAuthenticated}
+          setUser={setUser}
+          user={user}
         />
       </Route>
       <Route path="/dashboard">
-        <Dashboard authenticated={authenticated} />
+        <Dashboard authenticated={authenticated} user={user} />
       </Route>
     </Switch>
   );

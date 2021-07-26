@@ -9,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 
-const Login = ({ authenticated, setAuthenticated }) => {
+const Login = ({ authenticated, setAuthenticated, setUser, user }) => {
   const schema = yup.object().shape({
     email: yup.string().email("email inválido").required("campo obrigatório"),
     password: yup
@@ -33,13 +33,13 @@ const Login = ({ authenticated, setAuthenticated }) => {
     api
       .post("/sessions", data)
       .then((response) => {
-        const { token, user } = response.data;
+        console.log(response.data);
+        const { token } = response.data;
 
-        console.log(token);
-        console.log(user);
+        //console.log(token);
+        setUser([response.data]);
 
         localStorage.setItem("@kenzieHub:token", JSON.stringify(token));
-        localStorage.setItem("@kenzieHub:user", JSON.stringify(user));
 
         setAuthenticated(true);
 

@@ -91,25 +91,24 @@ const Signup = ({ authenticated }) => {
             <Input
               register={register}
               name="bio"
-              icon={FiMail}
-              label="bio"
-              placeholder=" bio"
+              label="Bio"
+              placeholder=" Bio"
               error={errors.bio?.message}
             />
             <Input
               register={register}
               name="contact"
               icon={FiMail}
-              label="contact"
-              placeholder="contact"
+              label="Contato"
+              placeholder="contato"
               error={errors.contact?.message}
             />
             <Input
               register={register}
               name="course_module"
               icon={FiMail}
-              label="couser_module"
-              placeholder="course_module"
+              label="Módulo do curso"
+              placeholder="módulo_curso"
               error={errors.course_module?.message}
             />
             <Input
@@ -126,7 +125,7 @@ const Signup = ({ authenticated }) => {
               name="passwordConfirm"
               icon={FiLock}
               type="password"
-              label="Confirmacao de senha"
+              label="Confirmacão de senha"
               placeholder=" Confirme  sua senha "
               error={errors.passwordConfirm?.message}
             />
