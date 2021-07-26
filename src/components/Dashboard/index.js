@@ -52,7 +52,7 @@ const Dashboard = ({ authenticated, user }) => {
           },
         }
       )
-      .then((_) => loadTechs())
+      .then((response) => setTech([response.data]))
       .catch((err) => console.err);
   };
 
