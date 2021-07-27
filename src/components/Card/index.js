@@ -8,6 +8,7 @@ const Card = ({ title, status, onClick }) => {
       <span>
         <FiClipboard /> Tecnologia : {title}
       </span>
+
       <span>
         <FiClipboard /> Status : {status}
       </span>

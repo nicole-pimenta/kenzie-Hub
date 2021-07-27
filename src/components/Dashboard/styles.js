@@ -11,6 +11,17 @@ export const Container = styled.div`
     margin: 0 auto;
     margin-top: 25px;
   }
+
+  p {
+    color: var(--white);
+    margin-top: 10px;
+  }
+
+  span {
+    color: var(--light-yellow);
+    font-size: 1.2rem;
+    margin: 0 5px;
+  }
 `;
 
 export const InputContainer = styled.form`

@@ -36,7 +36,6 @@ const Login = ({ authenticated, setAuthenticated, setUser, user }) => {
         console.log(response.data);
         const { token } = response.data;
 
-        //console.log(token);
         setUser([response.data]);
         localStorage.clear();
 

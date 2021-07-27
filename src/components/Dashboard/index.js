@@ -1,6 +1,6 @@
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Container, InputContainer, TasksContainer } from "./styles";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiEdit2 } from "react-icons/fi";
@@ -11,8 +11,12 @@ import api from "../../services/api";
 import Card from "../Card";
 
 const Dashboard = ({ authenticated, user, token }) => {
-  const [tech, setTech] = useState([]);
   const [list, setList] = useState([]);
+  const [nameUser, setNameUser] = useState("");
+
+  function setName() {
+    user.map((ele) => setNameUser(ele.user.name));
+  }
 
   function loadTechs() {
     user.map((ele) => setList(ele.user.techs));
@@ -20,6 +24,7 @@ const Dashboard = ({ authenticated, user, token }) => {
 
   useEffect(() => {
     loadTechs();
+    setName();
   }, []);
 
   const schema = yup.object().shape({
@@ -83,6 +88,13 @@ const Dashboard = ({ authenticated, user, token }) => {
 
   return (
     <Container>
+      <p>
+        Olá <span>{nameUser} </span>, seja bem-vindo (a) !!!
+      </p>
+      <p>
+        Insira abaixo Tecnologia desejada e Status apenas nos níveis :
+        <span> Iniciante/Intermediário/Avançado </span> .
+      </p>
       <InputContainer onSubmit={handleSubmit(onSubmitFunction)}>
         <section>
           <Input
@@ -111,7 +123,7 @@ const Dashboard = ({ authenticated, user, token }) => {
           ></Card>
         ))}
       </TasksContainer>
-      <Button onclick={handleLogout()}> Sair </Button>
+      <Button onClick={handleLogout()}> Sair </Button>
     </Container>
   );
 };
