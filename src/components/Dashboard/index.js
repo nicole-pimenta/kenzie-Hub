@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import Card from "../Card";
 
-const Dashboard = ({ authenticated, user, token }) => {
+const Dashboard = ({ authenticated, user, token, setAuthenticated }) => {
   const [list, setList] = useState([]);
   const [nameUser, setNameUser] = useState("");
 
@@ -80,8 +80,12 @@ const Dashboard = ({ authenticated, user, token }) => {
   };
 
   const handleLogout = () => {
-    return localStorage.clear();
+    setAuthenticated(false);
+    localStorage.clear();
   };
+
+  console.log(authenticated);
+
   if (!authenticated) {
     return <Redirect to="/login" />;
   }
@@ -123,7 +127,7 @@ const Dashboard = ({ authenticated, user, token }) => {
           ></Card>
         ))}
       </TasksContainer>
-      <Button onClick={handleLogout()}> Sair </Button>
+      <Button onClick={handleLogout}> Sair </Button>
     </Container>
   );
 };

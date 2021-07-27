@@ -39,7 +39,12 @@ const Routes = () => {
         />
       </Route>
       <Route path="/dashboard">
-        <Dashboard authenticated={authenticated} user={user} token={token} />
+        <Dashboard
+          authenticated={authenticated}
+          user={user}
+          token={token}
+          setAuthenticated={setAuthenticated}
+        />
       </Route>
     </Switch>
   );

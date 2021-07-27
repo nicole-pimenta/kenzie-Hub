@@ -33,7 +33,6 @@ const Login = ({ authenticated, setAuthenticated, setUser, user }) => {
     api
       .post("/sessions", data)
       .then((response) => {
-        console.log(response.data);
         const { token } = response.data;
 
         setUser([response.data]);
