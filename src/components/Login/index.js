@@ -38,6 +38,7 @@ const Login = ({ authenticated, setAuthenticated, setUser, user }) => {
 
         //console.log(token);
         setUser([response.data]);
+        localStorage.clear();
 
         localStorage.setItem("@kenzieHub:token", JSON.stringify(token));
 

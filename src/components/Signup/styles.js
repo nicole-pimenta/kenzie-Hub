@@ -52,7 +52,7 @@ export const AnimationContainer = styled.div`
   }
 
   h1 {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     text-shadow: 0px 4px 4px rgba(1, 0, 0, 0.95);
     font-size: 2rem;
   }

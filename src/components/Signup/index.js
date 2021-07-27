@@ -10,6 +10,8 @@ import api from "../../services/api";
 import { toast } from "react-toastify";
 
 const Signup = ({ authenticated }) => {
+  const history = useHistory();
+
   const schema = yup.object().shape({
     name: yup
       .string()
@@ -38,8 +40,6 @@ const Signup = ({ authenticated }) => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const history = useHistory();
-
   const onSubmitFunction = ({
     name,
     email,
@@ -50,15 +50,13 @@ const Signup = ({ authenticated }) => {
   }) => {
     const user = { name, email, password, bio, contact, course_module };
 
-    console.log(user);
-
     api
       .post("/users", user)
       .then((_) => {
-        toast.success("Sucesso ao criar a conta");
+        toast.success("Sucesso ao criar conta");
         return history.push("/login");
       })
-      .catch((err) => toast.error("Erro ao criar a conta , tente outro email"));
+      .catch((err) => toast.error("Erro ao criar conta, tente outro email"));
   };
 
   if (authenticated) {

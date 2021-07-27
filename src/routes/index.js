@@ -10,8 +10,12 @@ const Routes = () => {
 
   const [user, setUser] = useState([]);
 
+  const [token, setToken] = useState();
+
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("@kenzieHub:token"));
+
+    setToken(token);
 
     if (token) {
       return setAuthenticated(true);
@@ -35,7 +39,7 @@ const Routes = () => {
         />
       </Route>
       <Route path="/dashboard">
-        <Dashboard authenticated={authenticated} user={user} />
+        <Dashboard authenticated={authenticated} user={user} token={token} />
       </Route>
     </Switch>
   );

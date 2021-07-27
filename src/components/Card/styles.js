@@ -6,13 +6,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 250px;
-  width: 250px;
+  height: 200px;
+  width: 220px;
   padding: 16px;
   border: 1px solid var(--black);  
 
   button{
-      margin-top: 80px; 
+      margin-top: 40px; 
       align-self: flex-end;
   } 
 

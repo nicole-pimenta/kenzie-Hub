@@ -5,6 +5,12 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 0 38px;
+
+  button {
+    width: 90px;
+    margin: 0 auto;
+    margin-top: 25px;
+  }
 `;
 
 export const InputContainer = styled.form`

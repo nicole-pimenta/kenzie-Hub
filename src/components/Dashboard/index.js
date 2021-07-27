@@ -1,6 +1,6 @@
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { Container, InputContainer, TasksContainer } from "./styles";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FiEdit2 } from "react-icons/fi";
@@ -10,15 +10,12 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import Card from "../Card";
 
-const Dashboard = ({ authenticated, user }) => {
-  const [token] = useState(
-    JSON.parse(localStorage.getItem("@kenzieHub:token")) || ""
-  );
-
+const Dashboard = ({ authenticated, user, token }) => {
   const [tech, setTech] = useState([]);
+  const [list, setList] = useState([]);
 
   function loadTechs() {
-    user.map((ele) => setTech(ele.user.techs));
+    user.map((ele) => setList(ele.user.techs));
   }
 
   useEffect(() => {
@@ -26,8 +23,10 @@ const Dashboard = ({ authenticated, user }) => {
   }, []);
 
   const schema = yup.object().shape({
-    title: yup.string().required("Campo obrigatorio"),
-    status: yup.string().required("Campo obrigatorio"),
+    title: yup.string().required("Campo obrigatório"),
+    status: yup
+      .string()
+      .required("campos válidos : Iniciante/Intermediário/Avançado/"),
   });
 
   const {
@@ -52,17 +51,32 @@ const Dashboard = ({ authenticated, user }) => {
           },
         }
       )
-      .then((response) => setTech([response.data]))
+      .then((response) => setList([...list, response.data]))
       .catch((err) => console.err);
   };
 
-  const handleRemoveTech = (removedItem) => {
-    let filteredList = tech.filter((ele) => {
-      return ele !== removedItem;
+  const removeList = (removedItem) => {
+    let filtered = list.filter((ele) => {
+      return ele.id !== removedItem;
     });
-    setTech([...filteredList]);
+
+    return setList([...filtered]);
   };
 
+  const handleRemoveTech = (id) => {
+    api
+      .delete(`/users/techs/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => removeList(id))
+      .catch((err) => console.err);
+  };
+
+  const handleLogout = () => {
+    return localStorage.clear();
+  };
   if (!authenticated) {
     return <Redirect to="/login" />;
   }
@@ -89,14 +103,15 @@ const Dashboard = ({ authenticated, user }) => {
         </section>
       </InputContainer>
       <TasksContainer>
-        {tech.map((ele) => (
+        {list.map((ele) => (
           <Card
             title={ele.title}
             status={ele.status}
-            onClick={() => handleRemoveTech(ele)}
+            onClick={() => handleRemoveTech(ele.id)}
           ></Card>
         ))}
       </TasksContainer>
+      <Button onclick={handleLogout()}> Sair </Button>
     </Container>
   );
 };

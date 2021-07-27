@@ -6,10 +6,10 @@ const Card = ({ title, status, onClick }) => {
   return (
     <Container>
       <span>
-        <FiClipboard /> {title}
+        <FiClipboard /> Tecnologia : {title}
       </span>
       <span>
-        <FiClipboard /> {status}
+        <FiClipboard /> Status : {status}
       </span>
       <Button onClick={onClick}> Apagar</Button>
     </Container>
